@@ -22,13 +22,22 @@ function App() {
 
             {/* <!--Contenido principal--> */}
             <section id="content" className="content">
-              <Listado listadoState ={ listadoState } setListadoState={ setListadoState }/>
+                <Listado 
+                    listadoState = { listadoState } 
+                    setListadoState = { setListadoState }
+                />
             </section>
 
             {/* <!--Barra lateral--> */}
             <aside className="lateral">
-                <Buscador />
-                <Crear listadoState ={ listadoState } setListadoState={ setListadoState }/>
+                <Buscador 
+                    listadoState ={ listadoState } 
+                    setListadoState = { setListadoState } 
+                />
+                <Crear 
+                    listadoState = { listadoState } 
+                    setListadoState = { setListadoState }
+                />
             </aside>
 
             {/* <!--Pie de página--> */}
@@ -38,4 +47,4 @@ function App() {
     )
 }
 
-export default App
+export default App;
