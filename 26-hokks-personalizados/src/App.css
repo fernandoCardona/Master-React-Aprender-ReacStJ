@@ -1,0 +1,147 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 2em;
+  padding: .3em;
+  will-change: filter;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+.btn-cont {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+
+.container {
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+@media (min-width: 768px) {
+  .container {
+    width: 750px;
+  }
+}
+@media (min-width: 992px) {
+  .container {
+    width: 970px;
+  }
+}
+@media (min-width: 1200px) {
+  .container {
+    width: 1170px;
+  }
+}
+
+.card {
+  position: relative;
+  transition: all .2s ease-in-out;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  width: 400px;
+  margin: 0 auto;
+}
+
+label{
+  margin: 10px 0;
+}
+
+
+label, p {
+    display: block;
+    margin-bottom: 5px;
+    color: #777;
+    letter-spacing: 0.5px;
+    text-align: left;
+}
+
+input, button, textarea, select{
+    margin: 0 0 10px 0;
+    padding: 10px 5%;
+    width: 90%;
+    border: 0;
+    border-radius: 4px;
+    background-color: #FFFFFF;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+    color: #2C3E50;
+    font-size: 15px;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.title{
+  font-size: 3.444rem;
+  color:#1d3247;
+  text-align: center;
+  
+}
+
+.btn{
+  width: 100%;
+  background-color:blue;
+  margin: 10px auto;
+  position: relative;
+  color: #FFF;
+  font-size: 20px;
+  cursor: pointer;
+  text-align: center;
+  border: 0px;
+}
+
+.btn:hover {
+  background-color:#2ECC71;
+  transition: all .2s ease-in-out;
+
+}
+.datos-cont {
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin: 10px auto;
+  border-radius: 15px;
+  border: 1px solid #1d3247;
+  padding: 15px;
+}
+.datos-cont p{
+   margin:0px;
+}
