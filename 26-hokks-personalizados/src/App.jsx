@@ -3,6 +3,7 @@ import reactLogo from './assets/react.svg'
 import './App.css'
 import { MiComponente } from './components/MiComponente'
 import { MiFormulario } from './components/MiFormulario'
+import { MiUsuario } from './components/MiUsuario'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -20,9 +21,10 @@ function App() {
       <h1>Hooks Personalizados</h1>
       <hr />
       <MiComponente/>
-      
+      <hr />
       <MiFormulario/>
-      
+      <hr />
+      <MiUsuario/>
     </div>
   )
 }
