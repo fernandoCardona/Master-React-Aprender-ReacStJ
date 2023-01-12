@@ -1,6 +1,9 @@
 
 const validator = require('validator');
+const fs = require('fs');
+const path = require('path');
 const Article = require('../models/Article');
+const { validarArticle } = require('../helpers/validarArticle');
 //9.-Creamos las funciones del controlador de Articles
 const prueba = (req, res) => {
 
@@ -33,13 +36,8 @@ const crear = (req, res) => {
     let params = req.body;
     //Validar datos
     try {
-        let validar_title = !validator.isEmpty(params.title) && 
-                            validator.isLength(params.title, { min:5, max: undefined});
-        let validar_content = !validator.isEmpty(params.content);
-
-        if ( !validar_title || !validar_content) {
-            throw new Error('No se ha validado la informacion!!');
-        }
+        //16.1-HELPER Validar el params:
+        validarArticle(params);
 
     } catch (error) {
         return res.status(400).json({
@@ -130,12 +128,10 @@ const getSingleArticle = (req, res) => {
 
     });
     
-
-
 }
 
-//1.-Metodo para borrar un solo articulo:
-const  deleteArticle = (req, res) => {
+//14.-Metodo para borrar un solo articulo:
+const deleteArticle = (req, res) => {
     //Obtener un id por la url:
     let id = req.params.id
     //Buscar articulo por su id:
@@ -155,6 +151,144 @@ const  deleteArticle = (req, res) => {
         });
     });
 }
+//15.-Metodo para borrar un solo articulo:
+const editarArticle = (req, res) => {
+    //Obtener un id por la url:
+    let id = req.params.id;
+    //Obtener datos del body del articulo:
+    let params = req.body;
+    //Validar los datos:
+    try {
+        //16.1-HELPER Validar el params:
+        validarArticle(params);
+
+    } catch (error) {
+        return res.status(400).json({
+            mensaje: 'Error en validacion',
+            status: 'error' 
+        });
+    }
+    //Buscar y actualizar articulo:
+    Article.findOneAndUpdate({_id:id}, params, {new: true}, (error, articleActualizado) => {
+        if (error || !articleActualizado ) {
+            return res.status(500).json({
+                mensaje: 'Error no se ha editado el articulo correctamente',
+                status: 'error' 
+            });
+        }
+        //Devolver resultado:
+        return res.status(200).json({
+            status: 'success',
+            article: articleActualizado,
+            mensaje: 'Articulo actualizado',
+        });
+    })
+}
+
+//17-Subir una imagen al article con 'MULTER':
+const addImageArticle = (req, res) => {
+    //Configurar Multer para la subida de archivos:
+
+    //Obtenemos el fichero de la imagen subida:
+    if ( !req.file && !req.files) {
+        return res.status(404).json({
+            mensaje: 'Error, peticion invalida',
+            status: 'error' 
+        });
+    }
+    //Obtener nombre del archivo:
+    let fileName = req.file.originalname;
+    //Obtener extension del archivo:
+    let fileNameSplit = fileName.split('\.');
+    let fileNameExtension = fileNameSplit[1];
+    //Comprobamos que es la extension corecta:
+    if (fileNameExtension != 'png' &&
+        fileNameExtension != 'jpg' &&
+        fileNameExtension != 'jpeg' &&
+        fileNameExtension != 'gif' 
+    ) {
+        //Borrar archivo no valido:
+        fs.unlink(req.file.path, (error) => {
+            return res.status(400).json({
+                mensaje: 'Error, la extension del archivo no es valida',
+                status: 'error' 
+            });
+        })
+    }else {
+        //Actualizamos el Articleen la db:
+            //Obtener un id por la url:
+            let id = req.params.id;
+            console.log(req.file.filename)
+            //Buscar y actualizar articulo:
+            Article.findOneAndUpdate({_id:id}, { image: req.file.filename }, {new: true}, (error, articleActualizado) => {
+                if (error || !articleActualizado ) {
+                    return res.status(500).json({
+                        mensaje: 'Error no se ha editado el articulo correctamente',
+                        status: 'error' 
+                    });
+                }
+                //Devolver resultado:
+                return res.status(200).json({
+                    status: 'success',
+                    article: articleActualizado,
+                    ficherosubido: req.file,
+                    mensaje: 'Imagen subida correctamente',
+                });
+            })
+    }
+    
+}
+
+//18-Subir una imagen al article con 'MULTER':
+const showImageArticle = (req, res) => {
+    //Obtenemos el archivo-imagen que queremos mostrar:
+    let imageFile = req.params.imageFile;
+    let imagePathFile = './images/articles/' + imageFile;
+    //Buscamos el archivo en la carpeta images:
+    fs.stat(imagePathFile, (error, exist) => {
+        if (exist) {
+            return res.sendFile(path.resolve(imagePathFile))
+        }else {
+            return res.status(404).json({
+                mensaje: 'La imagen no existe',
+                status: 'error' 
+            });
+        }
+    })
+}
+
+//19-Buscar article en la db:
+const searchArticle = (req, res) => {
+    //Obtener el String de busqueda:
+    let searchString = req.params.searchString;
+    //Find OR:
+    Article.find({'$or': [
+        {'title':{ '$regex': searchString, '$options': 'i'}},
+        {'content':{ '$regex': searchString, '$options': 'i'}},
+    ]})
+    .sort({ date: -1 })
+    .exec( ( error, articlesFinded ) => {
+        if ( error || !articlesFinded || articlesFinded.length <= 0) {
+            return res.status(404).json({
+                mensaje: 'Articulos no encontrados',
+                status: 'error' 
+            });
+
+        }else {
+            //Devolver resultado:
+            return res.status(200).json({
+                status: 'success',
+                articles: articlesFinded,
+                mensaje: 'Imagen subida correctamente',
+            });
+        }
+        
+    })
+
+    
+
+}
+
 
 
 module.exports = {
@@ -163,5 +297,9 @@ module.exports = {
     crear,
     getArticles,
     getSingleArticle,
-    deleteArticle
+    deleteArticle,
+    editarArticle,
+    addImageArticle,
+    showImageArticle,
+    searchArticle 
 };
