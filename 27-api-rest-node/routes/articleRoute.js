@@ -23,7 +23,7 @@ router.get( '/ruta-de-prueba', ArticleController.prueba );
 router.get( '/curso', ArticleController.curso );
 
 //11.1-creamos la ruta de crear;
-router.post( '/crear', ArticleController.crear );
+router.post( '/create', ArticleController.create );
 
 //12.1-Creamos ruta para obtener los articulos de la db:
 router.get( '/articles/:ultimos?', ArticleController.getArticles );

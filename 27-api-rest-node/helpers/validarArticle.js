@@ -2,6 +2,7 @@ const validator = require('validator');
 
 //16.-HELPER Validar el articulo:
 const validarArticle = (params) => {
+    console.log(params);
     let validar_title = !validator.isEmpty(params.title) && 
                         validator.isLength(params.title, { min:5, max: undefined});
     let validar_content = !validator.isEmpty(params.content);

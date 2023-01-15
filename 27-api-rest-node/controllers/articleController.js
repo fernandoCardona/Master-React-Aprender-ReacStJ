@@ -30,18 +30,19 @@ const curso = (req ,res) =>{
 };
 
 //11.-Creamos el Controlador para crear articles nuevos:
-const crear = (req, res) => {
+const create = (req, res) => {
 
     //Recoger los datos por post
     let params = req.body;
+    console.log('params_recibidos: ', params)
     //Validar datos
     try {
         //16.1-HELPER Validar el params:
         validarArticle(params);
 
     } catch (error) {
-        return res.status(400).json({
-            mensaje: 'Error en validacion',
+        return res.status(404).json({
+            mensaje: 'Error en validacion Backend',
             status: 'error' 
         });
     }
@@ -79,7 +80,8 @@ const crear = (req, res) => {
 
 //12.-Metodo para obtener los articulos:
 const getArticles = (req, res) => {
-    let consulta = Article.find({});
+  
+        let consulta = Article.find({});
         //Filtro limitede articlulos:
         if (req.params.ultimos) {
             consulta.limit(3);
@@ -104,6 +106,8 @@ const getArticles = (req, res) => {
                 });
             
         });
+
+   
 
 }
 //13.-Metodo para obtener un solo articulo:
@@ -294,7 +298,7 @@ const searchArticle = (req, res) => {
 module.exports = {
     prueba,
     curso, 
-    crear,
+    create,
     getArticles,
     getSingleArticle,
     deleteArticle,
