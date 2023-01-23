@@ -1,5 +1,6 @@
 //Importaciones de paquetes de React:
 import { useState } from 'react';
+import { NavLink } from 'react-router-dom';
 
 //Importaciones de paquetes de terceros:
 
@@ -67,11 +68,10 @@ export const Nav = () => {
                         </a>
                     </li>
                     <li className="list-end__item">
-                        <a href="#" className="list-end__link">
+                        <NavLink to="/social/logout" className="list-end__link">
                             <i className="fa-solid fa-arrow-right-from-bracket"></i>
-                            <span className="list-end__name">Logout</span>
-                            
-                        </a>
+                            <span className="list-end__name">Logout</span> 
+                        </NavLink>
                     </li>
                 </ul>
 

@@ -1,12 +1,12 @@
 //Importaciones de paquetes de React:
 import { useState } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
 
 
 //Importaciones de paquetes de terceros:
 
 //Importaciones de HOOKS/HELPES/CONTEXT:
-
+import useAuth from '../../../hooks/useAuth';
 //Importaciones de ASSETS:
 
 //Importaciones de COMPONENTES de la App:
@@ -17,23 +17,35 @@ import { SideBar } from './SideBar';
 
 const PrivateLayout = () => {
 
+    const { auth, loading } = useAuth();
 
-    return (
-        <>
-        {/* LAYOUT */}
-            {/* HEADER */}
-            <Header/>
+    if ( loading ) {
+        return <h1>Loading...</h1>
+    }else{
+        return (
+            <>
+            {/* LAYOUT */}
+                {/* HEADER */}
+                <Header/>
 
-            {/* MAIN CONTENT */}
-            <section className="layout__content">
-                <Outlet/>
-            </section>
+                {/* MAIN CONTENT */}
+                <section className="layout__content">
+                    {
+                        auth._id 
+                            ? <Outlet/>
+                            : <Navigate to="/login" />
+                    } 
+                    
+                </section>
 
-            {/* SIDEBAR */}
-            <SideBar/>
+                {/* SIDEBAR */}
+                <SideBar/>
 
-        </>
-    )
+            </>
+        )
+    }
+
+    
 }
 
 export default PrivateLayout
