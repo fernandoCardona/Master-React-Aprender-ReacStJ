@@ -25,7 +25,7 @@ export const Register = () => {
         //Recogemos los datos del formulario en un obj.
         let newUser = form;
         //Guardar el formulario en el Backend/ddb:
-        console.log(Global.url + 'user/register')
+        //console.log(Global.url + 'user/register')
         const request = await fetch(Global.url + "user/register", {
             method: "POST",
             body: JSON.stringify(newUser),
@@ -50,6 +50,7 @@ export const Register = () => {
             </header>
 
             <div className="content__posts">
+                <div className="msg-succces-error">
                 {
                     saved == 'saved'
                     ?  <strong className="alert alert-success">Usuario registrado correctamente</strong> 
@@ -59,8 +60,9 @@ export const Register = () => {
                     ?  <strong className="alert alert-danger">Error!!, en el registrado de nuevo usuario</strong> 
                     : '' 
                 }
+                </div>
                 <form 
-                    className="register-form" 
+                    className="form-register" 
                     onSubmit={ userRegister }
                 >
                     <div className="form-group">
