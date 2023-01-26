@@ -11,7 +11,11 @@ import { useState } from 'react';
 
 
 export const People = () => {
-  return (
-    <h1>People</h1>
-  )
+
+
+    return (
+      <>
+      <h1>People</h1>
+      </>
+    )
 }

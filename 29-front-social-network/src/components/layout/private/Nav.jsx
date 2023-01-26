@@ -19,7 +19,7 @@ import avatar from '../../../assets/img/user.png'
 export const Nav = () => {
     const { auth, counters } = useAuth();
     //console.log('auth', auth)
-
+   
     return (
         <nav className="navbar__container-lists">
 
@@ -49,12 +49,11 @@ export const Nav = () => {
                 <ul className="container-lists__list-end">
                     <li className="list-end__item">
                         <a href="#" className="list-end__link-image">
-                        {
+                            {
                                 auth.avatarImg != 'default.png' && 
-                                    <img src={
-                                        Global.url + 'user/userShowAvatar/' + auth.avatarImg
-                                    } className="list-end__img" alt="Foto de perfil" />
+                                    <img src={ Global.url + 'user/userShowAvatar/' + auth.avatarImg } className="list-end__img" alt="Foto de perfil" />
                             }
+                             
                             {
                                 auth.avatarImg == 'default.png' && 
                                     <img src={avatar} className="list-end__img" alt="Foto de perfil" />

@@ -321,6 +321,7 @@ const userUpload = ( req, res ) => {
 const userShowAvatar = ( req, res ) => {
     //Obtener parametro de la url:
     const file = req.params.file;
+     
     //Montar el path real de la avatarImg:
     const avatarImgPath = './upload/avatars/' + file;
     //Comprovar que avatarImg existe:
@@ -332,7 +333,7 @@ const userShowAvatar = ( req, res ) => {
             });
         }
         //Devolver Respuesta con la avatarImg:
-        return res.sendFile(path.resolve( avatarImgPath ));
+        return res.sendFile(path.resolve(avatarImgPath));
     });
     //devolvemos el file avatarImg:
 

@@ -15,7 +15,7 @@ import avatar from '../../../assets/img/user.png';
 
 export const SideBar = () => {
     const { auth, counters } = useAuth();
-    //console.log('auth', auth.avatarImg)
+    //console.log('authIMAGE', auth.avatarImg)
     
 
     return (
@@ -37,6 +37,7 @@ export const SideBar = () => {
                                         Global.url + 'user/userShowAvatar/' + auth.avatarImg
                                     } className="container-avatar__img" alt="Foto de perfil" />
                             }
+                              
                             {
                                 auth.avatarImg == 'default.png' && 
                                     <img src={avatar} className="container-avatar__img" alt="Foto de perfil" />
