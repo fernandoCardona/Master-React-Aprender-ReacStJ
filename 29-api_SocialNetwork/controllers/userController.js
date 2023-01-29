@@ -2,7 +2,8 @@
 const bcrypt = require('bcrypt');
 const mongoosePagination = require('mongoose-pagination');const multer = require('multer');
 const fs = require('fs');
-const path = require('path')
+const path = require('path');
+
 
 const User = require('../models/userModel');
 const Follow = require("../models/followModel");
@@ -10,7 +11,7 @@ const Publication = require('../models/PublicationModel');
 
 const userJWT = require('../services/userJWT');
 const followService = require('../services/followService');
-//const validate = require("../helpers/validate");
+const validate = require("../helpers/validate");
 
 
 
@@ -36,6 +37,16 @@ const register = (req, res) => {
         });
 
     }
+    //Validacion:
+    try {
+        validate(params);
+    } catch (error) {
+        return res.status(400).json({
+            status: 'error',
+            msg: 'Validacion no superada.'
+        });
+    }
+    
 
     //Comprobacion de usuario duplicado:
     User.find({ 

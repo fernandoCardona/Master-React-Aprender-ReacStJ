@@ -4,3 +4,5 @@
 ## **1. Dependencias del proyecto:** ( Dependencias a instalar con yarn )
 * yarn  
 * yarn add yarn add react-router-dom@6.4.3
+//FORMATEO de Fechas:
+* yarn add react-time-ago javascript-time-ago --save  

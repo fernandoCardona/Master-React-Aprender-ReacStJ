@@ -1,5 +1,5 @@
 //Importaciones de paquetes de React:
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
 //Importaciones de paquetes de terceros:
@@ -19,6 +19,12 @@ import avatar from '../../../assets/img/user.png'
 export const Nav = () => {
     const { auth, counters } = useAuth();
     //console.log('auth', auth)
+    //console.log('authIMAGE', auth.avatarImg)
+    let avatarImg =  Global.url + 'user/userShowAvatar/' + auth.avatarImg
+    useEffect(() => {
+        //console.log('accionado useEffect');
+        avatarImg =  Global.url + 'user/userShowAvatar/' + auth.avatarImg
+    }, [auth]);
    
     return (
         <nav className="navbar__container-lists">
@@ -48,20 +54,20 @@ export const Nav = () => {
 
                 <ul className="container-lists__list-end">
                     <li className="list-end__item">
-                        <a href="#" className="list-end__link-image">
+                        <NavLink to={"/social/profile/" + auth._id} className="list-end__link-image">
                             {
                                 auth.avatarImg != 'default.png' && 
-                                    <img src={ Global.url + 'user/userShowAvatar/' + auth.avatarImg } className="list-end__img" alt="Foto de perfil" />
+                                    <img src={ avatarImg } className="list-end__img" alt="Foto de perfil" />
                             }
                              
                             {
                                 auth.avatarImg == 'default.png' && 
                                     <img src={avatar} className="list-end__img" alt="Foto de perfil" />
                             }
-                        </a>
+                        </NavLink>
                     </li>
                     <li className="list-end__item">
-                        <NavLink to="" className="list-end__link">
+                        <NavLink to={"/social/profile/" + auth._id} className="list-end__link">
                             <span className="list-end__name">{ auth.nick }</span>
                             {/* <i className="fa-solid fa-caret-down"></i> */}
                         </NavLink>

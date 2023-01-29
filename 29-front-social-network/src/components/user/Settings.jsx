@@ -9,14 +9,14 @@ import { Global } from '../../helpers/Global';
 import useAuth from '../../hooks/useAuth';
 import { SerializeForm } from '../../helpers/SerializeForm';
 //Importaciones de ASSETS:
-
+import avatar from '../../assets/img/user.png';
 //Importaciones de COMPONENTES de la App:
 
 
 export const Settings = () => {
     //3.3- comprobamos los datos que tenemos en useAuth:
     const { auth, setAuth } = useAuth();
-    //console.log(auth)
+    console.log(auth)
 
     //3.1- Creamos un State para recoger y poder modificar el formulario:
     const { form, handleInputChange } = useForm({});
@@ -57,7 +57,7 @@ export const Settings = () => {
         //3.3- Subida de imagenes:
         const fileInput = document.querySelector('#file');
 
-        if (data.status == 'success') {
+        if (data.status == 'success' && data.user) {
             //Recoger imagen a subir:
             const formData = new FormData();
             formData.append('file0', fileInput.files[0]);
@@ -71,7 +71,7 @@ export const Settings = () => {
             });
 
             const uploadData = await uploadRequest.json();
-            
+             
             if (uploadData.status == 'success' && uploadData.user ) {
 
                 delete uploadData.user.password;

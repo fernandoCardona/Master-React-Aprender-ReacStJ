@@ -38,6 +38,7 @@ export const Register = () => {
         //Comprobamos si data ha sido success:
         if (data.status == 'success') {
             setSaved('saved');
+            
         }else{
             setSaved('error');
         }

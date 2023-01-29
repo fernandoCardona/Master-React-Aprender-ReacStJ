@@ -104,7 +104,8 @@ const deletePublication = (req, res) => {
 //17.1.0- Listar publicaciones de un ususario:
 const userPublication = (req, res) => {
     //Obtener id del usuario de la url:
-    let userIdentityId = req.user.id;
+    //let userIdentityId = req.user.id;
+    const userId = req.params.id;
 
     //Comprobar si m llega pagina, sino llega por defecto sera page 1:
     let page = 1;
@@ -112,7 +113,7 @@ const userPublication = (req, res) => {
 
     //Find, populate, ordenar y paginar con la condicion del id:
     let itemPerPage = 5;
-    Publication.find({'user':req.user.id})
+    Publication.find({ "user": userId })
                 .sort("-createAt") //Ordenado de mas nueva a mas antigua
                 .populate('user', '-password -__v -userRole -email')
                 .paginate( page, itemPerPage, (error, publications, total) => {

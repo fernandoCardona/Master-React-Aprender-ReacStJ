@@ -26,6 +26,9 @@ import { AuthProvider } from "../context/AuthProvider";
 import { Logout } from "../components/user/Logout";
 import { People } from "../components/user/People";
 import { Settings } from "../components/user/Settings";
+import { Following } from "../components/follow/Following";
+import { Followers } from "../components/follow/Followers";
+import { Profile } from "../components/user/Profile";
 
 
 export const Routing = () => {
@@ -49,19 +52,21 @@ export const Routing = () => {
                         <Route path="people" element={<People/>}/>
                         <Route path="settings" element={<Settings/>}/>
                         <Route path="logout" element={<Logout/>}/>
+                        <Route path="following/:userId" element={<Following/>}/>
+                        <Route path="followers/:userId" element={<Followers/>}/>
+                        {/* <Route path="publications/:userId" element={<Publications/>}/> */}
+                        <Route path="profile/:userId" element={<Profile/>}/>
                         
                     </Route>
                     
 
                     <Route path="/*" element={
-                    <>
-                    <div className="following__title">
-                        <h1 className="heading">Error 404</h1>
-                        <Link to="/">Back to Home</Link>
-                    </div>
-                        
-                    </>
-                    
+                        <>
+                            <div className="following__title">
+                                <h1 className="heading">Error 404</h1>
+                                <Link to="/">Back to Home</Link>
+                            </div>  
+                        </>                   
                     }/>
                 </Routes>
             </AuthProvider>

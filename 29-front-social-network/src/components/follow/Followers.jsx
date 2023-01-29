@@ -2,20 +2,24 @@
 import { useEffect, useState } from 'react';
 
 //Importaciones de paquetes de terceros:
+import { useParams } from 'react-router-dom';
 
 //Importaciones de HOOKS/HELPES/CONTEXT:
 import useAuth from '../../hooks/useAuth';
 import { Global } from '../../helpers/Global';
+import { getProfile } from '../../helpers/getProfile';
 
 //Importaciones de ASSETS:
 import avatar from '../../assets/img/user.png';
-
+import { UsersList } from '../user/UsersList';
 
 //Importaciones de COMPONENTES de la App:
-import { UsersList } from './UsersList';
+
+
  
-export const People = () => {
+export const Followers = () => {
     const { auth, counters } = useAuth();
+    const params = useParams();
 
     const [users, setUsers] = useState([]);
     const [page, setPage] = useState(1);
@@ -23,6 +27,7 @@ export const People = () => {
     const [following, setFollowing] = useState([]);
     const [followers, setFollowers] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [userProfile, setUserProfile] = useState({});
     
     //Token
     const token = localStorage.getItem('token');
@@ -30,25 +35,40 @@ export const People = () => {
 
     useEffect(() => {
         getUsers(1);
+        getProfile(params.userId, setUserProfile);
     }, []);
 
     const getUsers = async( nextPage = 1 ) => {
-        setLoading(true);
         //Token
         const token = localStorage.getItem('token');
+
+        setLoading(true);
+
+        //Obtener useId:
+        let userId = params.userId;
+        
         //Peticion obtener usuarios:
-        const request = await fetch(Global.url + 'user/userList/' + nextPage , {
+        const request = await fetch(Global.url + 'follow/followers/' + userId + '/' + nextPage , {
             method: "GET",
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': token  
             }
         });
+
         //Recibimos toda la info:
         const data = await request.json();
         //console.log('data',data);
-        
+        //console.log('data.follows',data.follows);
 
+        let cleanUsers = [];
+
+        //Recorrer y limpiar follows para quitarle los follow.user:
+        data.follows.forEach( follow => {
+            cleanUsers = [...cleanUsers, follow.user]
+        })
+        data.users = cleanUsers;
+        
         //Creamos un estado para poder listarlos:
         if (data.users && data.status == 'success') {
             let newUsers = data.users;
@@ -62,18 +82,16 @@ export const People = () => {
             if( users.length >= (data.total - data.users.length) ){
                 setMore(false);
             }
-
-            
-        }
-        
+        }       
     }
     
+  
 
 
     return (
       <>
             <header className="content__header">
-                <h1 className="content__title">People</h1>
+                <h1 className="content__title">Followers of {userProfile.nick}</h1>
                
             </header>
 
